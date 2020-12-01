@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FFSSMTest {
     
     Licence L1;
+    Licence L2;
     Club C1;
     Moniteur M1;
     Moniteur M2;
@@ -37,9 +38,10 @@ public class FFSSMTest {
     @BeforeEach
     public void setUp() {
         C1 = new Club(M1, "Bikinibottom", "0345676473");
-        L1 = new Licence(P1, "001", (2020-01-01), 2, C1);
-        Plong1 = new Plongee(S1, M2, (2020-04-26), 300, 180);
-        Plong2 = new Plongee(S2, M1, (2020-07-19), 500, 180);
+        L1 = new Licence(P1, "001", LocalDate.of(2020,01,01), 2, C1);
+        L2 = new Licence(P1, "002", LocalDate.of(2020,06,11), 3, C1);
+        Plong1 = new Plongee(S1, M2, LocalDate.of(2020,04,26), 300, 180);
+        Plong2 = new Plongee(S2, M1, LocalDate.of(2020,07,19), 500, 180);
     }
     
      @Test
@@ -98,10 +100,10 @@ public class FFSSMTest {
     @Test
     public void testAjouteParticipant() {
         Plong1.ajouteParticipant(P1);
-        assertEquals((P1),Plong1.participants, "La liste des participants devrait contenir le plongeur P1");
-        Plong1.ajouteParticipant(P2);
         HashSet<Plongeur> participantsattendus = new HashSet<>();
         participantsattendus.add(P1);
+        assertEquals(participantsattendus ,Plong1.participants, "La liste des participants devrait contenir le plongeur P1");
+        Plong1.ajouteParticipant(P2);
         participantsattendus.add(P2);
         assertEquals(participantsattendus, Plong1.participants, "La liste des participants devrait contenir les plongeurs P1 et P2");
         
@@ -115,6 +117,14 @@ public class FFSSMTest {
     
     @Test
     public void testAjouteLicence() {
+        P1.ajouteLicence(L1);
+        HashSet<Licence> licencesattendues = new HashSet<>();
+        licencesattendues.add(L1);
+        assertEquals(licencesattendues,P1.licences, "La liste des licences devrait contenir la licence L1");
+        P1.ajouteLicence(L2);
+        licencesattendues.add(L2);
+        assertEquals(licencesattendues, P1.licences, "La liste des licences devrait contenir les licences L1 et L2");
+        
         
     }
     
